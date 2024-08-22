@@ -41,10 +41,10 @@ export class AuthService {
 		const payload = { username };
 		return {
 			message:
-				'1. Откройте вкладку [Authorization] в Postman\n' +
-				'2. Нажмите [Auth/type]\n' +
-				'3. Выберите Bearer Token\n' +
-				'4. Вставьте этот JWT Токен\n',
+				'1. Откройте вкладку [Authorization] в Postman' +
+				'2. Нажмите [Auth/type]' +
+				'3. Выберите Bearer Token' +
+				'4. Вставьте этот JWT Токен',
 			access_token: await this.jwtService.signAsync(payload),
 		};
 	}

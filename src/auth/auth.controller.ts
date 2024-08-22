@@ -4,22 +4,20 @@ import {
 	Controller,
 	Get,
 	HttpCode,
-	Post, UseGuards,
-	UseInterceptors,
+	Post,
+	UseGuards,
 	UsePipes,
 	ValidationPipe,
 } from '@nestjs/common';
 import { AuthDto } from './dto/auth-dto';
 import { AuthConstants } from './auth.constants';
 import { AuthService } from './auth.service';
-import { RegisterInterceptor } from './interceptors/register.interceptor';
 import { JwtAuthGuard } from './guards/jwt-guard';
 
 @Controller('auth')
 export class AuthController {
 	constructor(private readonly authService: AuthService) {}
 
-	@UseInterceptors(RegisterInterceptor)
 	@UsePipes(new ValidationPipe())
 	@Post('register')
 	async register(@Body() dto: AuthDto): Promise<any> {
@@ -41,6 +39,8 @@ export class AuthController {
 	@UseGuards(JwtAuthGuard)
 	@Get('check')
 	async check() {
-		return 'Доступ есть.';
+		return {
+			status: 'Вы авторизованы. Доступ есть.',
+		};
 	}
 }

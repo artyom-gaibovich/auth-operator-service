@@ -37,15 +37,11 @@ export class AuthService {
 		return { username: user.username };
 	}
 
-	async login(username: string): Promise<{ access_token: string; message: string }> {
+	async login(username: string): Promise<{ access_token: string; message?: string }> {
 		const payload = { username };
+		const jwt_token = await this.jwtService.signAsync(payload);
 		return {
-			message:
-				'1. Откройте вкладку [Authorization] в Postman' +
-				'2. Нажмите [Auth/type]' +
-				'3. Выберите Bearer Token' +
-				'4. Вставьте этот JWT Токен',
-			access_token: await this.jwtService.signAsync(payload),
+			access_token: jwt_token,
 		};
 	}
 }

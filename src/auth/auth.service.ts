@@ -21,11 +21,11 @@ export class AuthService {
 		return result;
 	}
 
-	/* async findUser(email: string) {
-     return this.userModel.findOne({ email }).exec();
-   }*/
+	async findUser(username: string) {
+		return await this.usersRepository.findByUsername(username);
+	}
 
-	async validateUser(username: string, password: string): Promise<any> {
+	async validateUser(username: string, password: string): Promise<{ username: string }> {
 		const user = await this.usersRepository.findByUsername(username);
 		if (!user) {
 			throw new UnauthorizedException(AuthConstants.UserNotFoundError);
@@ -37,7 +37,7 @@ export class AuthService {
 		return { username: user.username };
 	}
 
-	async login(username: string) {
+	async login(username: string): Promise<{ access_token: string }> {
 		const payload = { username };
 		return {
 			access_token: await this.jwtService.signAsync(payload),

@@ -1,7 +1,6 @@
 import { UsersManagerInterface } from './users.manager.interface';
 import { Inject } from '@nestjs/common';
 import { DIConstants } from '../../DIConstants';
-import { users } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 
 export class UsersManager implements UsersManagerInterface {
@@ -11,5 +10,6 @@ export class UsersManager implements UsersManagerInterface {
 		const result = await this.prisma.users.create({
 			data: { username, passwordHash },
 		});
+		return result;
 	}
 }
